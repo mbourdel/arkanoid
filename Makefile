@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbourdel <mbourdel@student.42.fr>          +#+  +:+       +#+         #
+#    By: jbahus <jbahus@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/05/02 13:17:21 by mbourdel          #+#    #+#              #
-#    Updated: 2015/05/02 15:50:23 by mbourdel         ###   ########.fr        #
+#    Created: 2015/05/02 14:04:17 by jbahus            #+#    #+#              #
+#    Updated: 2015/05/02 21:11:49 by mbourdel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = arkanoid
 
-SRC = ./src/xxxxx.c
-SRC += ./src/yyyyyy.c
+SRC = arkanoid.c
+SRC += draw_form.c
 
-OBJ += 
+OBJ = $(SRC:.c=.o)
 
 LIBFT = ./libft/libft.a
 
@@ -29,15 +29,22 @@ GCC = gcc -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME):
+$(NAME):$(OBJ)
 	@git submodule init
 	@git submodule update
 	@cd glfw; CMake CMakeLists.txt; cd src; $(MAKE) -f Makefile
 	@cd libft; $(MAKE) -f Makefile
-	@$(GCC) $(FRAM) -o $(NAME) $(SRC) $(LIBFT) $(GLFW)
+	@$(GCC) $(FRAM) -o $(NAME) $(OBJ) $(LIBRARY)
+	@echo "[=================]"
+	@echo "|     succes !    |"
+	@echo "|     arkanoid    |"
+	@echo "|   was summoned  |"
+	@echo "[=================]"
 
 clean:
-	@rm $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean: clean
-	@rm $(NAME)
+	@rm -rf $(NAME)
+
+re: fclean all
