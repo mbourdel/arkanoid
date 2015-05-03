@@ -6,29 +6,44 @@
 /*   By: mbourdel <mbourdel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/02 20:21:08 by mbourdel          #+#    #+#             */
-/*   Updated: 2015/05/02 23:20:43 by mbourdel         ###   ########.fr       */
+/*   Updated: 2015/05/03 12:42:05 by mbourdel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "arkanoid.h"
 
-void		square_create(t_squa squa)
+static void		brick_color(char c)
+{
+	if (c == 1)
+		glColor3b(102, 102, 255);
+	if (c == 2)
+		glColor3b(255, 0, 127);
+	if (c == 3)
+		glColor3b(255, 102, 102);
+	if (c == 4)
+		glColor3b(255, 0, 0);
+}
+
+void		square_create(t_env *env)
 {	
-	while (squa.y > 0.f)
+	while (env->squa.y > 0.f)
 	{
-		while (squa.x < 0.97f)
+		while (env->squa.x < 0.97f)
 		{
-			glBegin(GL_QUADS);
-			glColor3f(0.9f, 0.9f, 0.9f);
-			glVertex2f(squa.x - X_VAR, squa.y - Y_VAR);
-			glVertex2f(squa.x + X_VAR, squa.y - Y_VAR);
-			glVertex2f(squa.x + X_VAR, squa.y + Y_VAR);
-			glVertex2f(squa.x - X_VAR, squa.y + Y_VAR);
-			glEnd();
-			squa.x = squa.x + X_INC;
+			if (env->map[i] != '\n' && i < 139 && env->map[i] > '0')
+			{
+				glBegin(GL_QUADS);
+				brick_color(env->map[i]);
+				glVertex2f(env->squa.x - X_VAR, env->squa.y - Y_VAR);
+				glVertex2f(env->squa.x + X_VAR, env->squa.y - Y_VAR);
+				glVertex2f(env->squa.x + X_VAR, env->squa.y + Y_VAR);
+				glVertex2f(env->squa.x - X_VAR, env->squa.y + Y_VAR);
+				glEnd();
+			}
+			env->squa.x = env->squa.x + X_INC;
 		}
-		squa.x = X_BEGIN;
-		squa.y = squa.y - 0.092f;
+		env->squa.x = X_BEGIN;
+		env->squa.y = env->squa.y - 0.092f;
 	}
 }
 
